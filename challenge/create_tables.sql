@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Category (
     category_id SERIAL PRIMARY KEY,
     category_name VARCHAR(255) NOT NULL,
     sub_category_name VARCHAR(255) NOT NULL,
-    type_category_name VARCHAR(255 NOT NULL)
+    type_category_name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Item (
