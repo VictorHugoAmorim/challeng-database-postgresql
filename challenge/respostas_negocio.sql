@@ -14,7 +14,12 @@ Para resolver:
 SELECT
    cr.customer_id
 	,concat(cr.first_name,' ', cr.last_name) as nome_completo
+   --Interpretação 1
+   -- Caso considere "quantidade de vendas" a soma de produtos vendidos, use o calculo abaixo
    ,sum(so.quantity) as quantidade_produtos_vendidos
+   --Interpretação 2
+   -- Caso considere "quantidade de vendas" a soma de cada ordem (independente de quantidade de produtos vendidos), use o calculo abaixo
+   --,count(DISTINCT so.order_id) as quantidade_de_vendas
 FROM 
  	sale_order so
  	left JOIN customer cr
@@ -24,12 +29,16 @@ FROM
    and EXTRACT(MONTH FROM cr.date_of_birth) = EXTRACT(MONTH FROM CURRENT_DATE)
    and EXTRACT(DAY FROM cr.date_of_birth) = EXTRACT(DAY FROM CURRENT_DATE)
  GROUP BY 1
+ --Interpretação 1
  HAVING sum(so.quantity) > 1500
+ --Interpretação 2
+ --HAVING count(DISTINCT so.order_id) > 1500
 
 /*
 Explicação: 
    Para o SQL acima foi utilizada a função 'concat' para junção de nome e sobrenome. Armazenando-os em apenas 1 coluna facilitará a leitura;
-   A soma e agrupamento da coluna quantity foi necessária para termos todos números de vendas de cada vendedor;
+   A soma da coluna quantity foi necessária para termos todos números de vendas de cada vendedor;
+   A contagem distinta da coluna order_id representa o nº de vendas, independente da quantidade de protudos vendidos em cada venda;
    Foi necessário uma ligação entre tabelas (sale_order e customer) para coletar os dados de usuario e venda;
    O comando Between foi usado para filtrar intervalo de tempo e a função extract auxilia na identificação de dia, mês e ano;
 */

@@ -1,6 +1,6 @@
 ''' 
 Este código é uma tentativa extra de manipular tabelas utilizando a linguagem python.
-No caso, podemos simular uma Stored Procedure, realizando updates de tabela a partir de condições específicas.
+No caso, podemos simular uma Stored Procedure, realizando updates de tabela a partir de condições específicas (ex: hora do dia).
 Abaixo, podemos observar uma programação orientada a objeto que aplica percentual de variação nos preços e atualiza o estado dos produtos.
 '''
 # Importação de bibliotecas
@@ -31,8 +31,9 @@ class StoredProcedure:
     # Função que compara a data corrente com a data de parâmetro. Será usada para validar a coluna 'is_active'
     @staticmethod
     def state_validation(end_date):
-        hoje = datetime.now()
-        if end_date <= hoje:
+        today = datetime.now()
+        # Se a data de end_date do item for igual ou anterior a hoje, a coluna is_active receberá "Falso", do contrário, "True".
+        if end_date <= today:
             return False 
         else:
             return True
@@ -56,5 +57,5 @@ class StoredProcedure:
 
 if __name__ == '__main__':
     # Os parâmetros 'table_name' e 'percent_variation' podem ser alterados conforme necessidade
-    tabela_itens = StoredProcedure(table_name = 'item', percent_variation= 0.10)
-    tabela_itens.run()
+    item = StoredProcedure(table_name = 'item', percent_variation= 0.10)
+    item.run()
